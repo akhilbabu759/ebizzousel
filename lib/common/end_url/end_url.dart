@@ -1,3 +1,3 @@
 class EndUrl{
-  final endurl='/photos';
+  final photos='/photos';
 }
