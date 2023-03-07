@@ -25,10 +25,43 @@ class CarouselHome extends StatelessWidget {
               itemBuilder: (BuildContext context, int index, int realIndex) =>
                   carousalC.carouselList.isEmpty
                       ? const CarouselShimmer()
-                      : Image.network(
-                          '${carousalC.carouselList[index].url}'),
+                      : Stack(children: [
+                          Image.network('${carousalC.carouselList[index].url}'),
+                          Center(
+                              child: Text(
+                            carousalC.carouselList[index].title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                          Positioned(bottom: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: carousalC.carouselList.map((url) {
+                                  int index = carousalC.carouselList.indexOf(url);
+                                  return Container(
+                                    width: 8.0,
+                                    height: 8.0,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: carousalC.position == index
+                                          ? Color.fromRGBO(0, 0, 0, 0.9)
+                                          : Color.fromRGBO(0, 0, 0, 0.4),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          )
+                        ]),
               options: CarouselOptions(
-                height: 180.0,
+                onPageChanged: (index, reason) {
+                  carousalC.positionChange(index);
+                },
+                height: 190.0,
                 enlargeCenterPage: true,
                 autoPlay: true,
                 aspectRatio: 16 / 9,

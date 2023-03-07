@@ -16,6 +16,12 @@ class HomeController extends GetxController {
   List<Carousel> carouselList = [];
   CarouselService carousalS = CarouselService();
   bool isLoding = true;
+  int position=0;
+  void positionChange(index){
+   position= index;
+   update();
+
+  }
    void getCarosel() async {
     isLoding = false;
     log('get call');
